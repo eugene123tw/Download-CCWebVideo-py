@@ -23,7 +23,7 @@ def download_cc_web_video_keyframes(shot_info_path, output_path):
         KID = str(int(math.floor(int(videoID[i])/100)))
         make_dir(os.path.join(output_path, KID))
         file_path = os.path.join(output_path, KID, keyframeName[i]+'.jpg')
-        if not os.path.isfile(file_path):
+        if not os.path.isfile(file_path) or os.path.getsize(file_path) == 0:
             r = requests.get(os.path.join(server_videoPath, KID, keyframeName[i] + '.jpg'))
             with open(file_path, 'wb') as f:
                 print('Write %s' % (keyframeName[i] + '.jpg'))
@@ -32,7 +32,7 @@ def download_cc_web_video_keyframes(shot_info_path, output_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Download cc video key frames")
     parser.add_argument('--shot_info', default='/home/eugene/Dev/Download-CCWebVideo-py/Shot_Info.txt')
-    parser.add_argument('--outpath', default='/home/eugene/Dev/Download-CCWebVideo/cc_web_video/Keyframes')
+    parser.add_argument('--outpath', default='/home/eugene/_DATASET/cc_web_video/Keyframes')
     args = parser.parse_args()
 
     download_cc_web_video_keyframes(args.shot_info, args.outpath)
